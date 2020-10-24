@@ -1,0 +1,7 @@
+{
+  "name": "kanban-board",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "kimizuy <kimizuyamasaki@gmail.com>",
+  "license": "MIT"
+}
