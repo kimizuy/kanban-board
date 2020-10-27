@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 function App() {
   return (
@@ -57,4 +57,10 @@ const ColumnHeader = styled.div``
 
 const Card = styled.div``
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(
+  <>
+    <GlobalStyle />
+    <App />
+  </>,
+  document.getElementById('app'),
+)
