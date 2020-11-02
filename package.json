@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel ./src/index.html",
+    "start-api": "json-server --watch ./api/db.json --middlewares ./api/middlewares",
     "build": "parcel build ./src/index.html",
     "tsc": "tsc",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\""
