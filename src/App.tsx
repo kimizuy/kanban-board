@@ -6,6 +6,7 @@ import produce from 'immer'
 import { randomID } from './util'
 import { Overlay as _Overlay } from './Overlay'
 import { DeleteDialog } from './DeleteDialog'
+import { api } from './api'
 
 export function App() {
   const [filterValue, setFilterValue] = useState('')
@@ -60,6 +61,10 @@ export function App() {
   }
 
   const addCard = (columnID: string) => {
+    const column = columns.find(c => c.id === columnID)
+    if (!column) return
+
+    const text = column.text
     const cardID = randomID()
 
     type Columns = typeof columns
@@ -75,6 +80,12 @@ export function App() {
         column.text = ''
       }),
     )
+
+    // API 通信はネットワークやバックエンドサーバーの影響を受け結果が予想できないため、setColumns の外で呼び出す
+    api('POST /v1/cards', {
+      id: cardID,
+      text,
+    })
   }
 
   const dropCardTo = (toID: string) => {
