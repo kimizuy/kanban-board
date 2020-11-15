@@ -8,7 +8,6 @@ import { Column } from './Column'
 import { DeleteDialog } from './DeleteDialog'
 import { Overlay as _Overlay } from './Overlay'
 import { useDispatch, useSelector } from 'react-redux'
-import { Action, State as RootState } from './reducer'
 
 type State = {
   columns?: {
@@ -26,9 +25,9 @@ type State = {
 export function App() {
   const dispatch = useDispatch()
 
-  const filterValue = useSelector((state: RootState) => state.filterValue)
+  const filterValue = useSelector(state => state.filterValue)
   const setFilterValue = (value: string) => {
-    dispatch<Action>({
+    dispatch({
       type: 'Filter.SetFilter',
       payload: {
         value,
