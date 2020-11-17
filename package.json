@@ -8,6 +8,8 @@
     "start": "parcel ./src/index.html",
     "start-api": "json-server --watch ./api/db.json --middlewares ./api/middlewares",
     "build": "parcel build ./src/index.html",
+    "pretest": "tsc --project ./test/tsconfig.json --outDir ./test/dist",
+    "test": "node ./test/dist/test",
     "tsc": "tsc",
     "format": "prettier --write \"./src/**/*.{ts,tsx}\"",
     "lint": "eslint \"./src/**/*.{ts,tsx}\""
