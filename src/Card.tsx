@@ -13,8 +13,14 @@ export function Card({ id }: { id: CardID }) {
     state.columns?.flatMap(c => c.cards ?? []).find(c => c.id === id),
   )
   const drag = useSelector(state => state.draggingCardID === id)
+
   const onDeleteClick = () =>
-    dispatch({ type: 'Card.SetDeletingCard', payload: { cardID: id } })
+    dispatch({
+      type: 'Card.SetDeletingCard',
+      payload: {
+        cardID: id,
+      },
+    })
 
   if (!card) {
     return null
@@ -33,7 +39,9 @@ export function Card({ id }: { id: CardID }) {
         })
       }}
       onDragEnd={() => {
-        dispatch({ type: 'Card.EndDragging' })
+        dispatch({
+          type: 'Card.EndDragging',
+        })
       }}
     >
       <CheckIcon />
@@ -105,18 +113,22 @@ const Link = styled.a.attrs({
 `
 
 function DropArea({
+  targetID: toID,
   disabled,
-  onDrop,
   children,
   className,
   style,
 }: {
+  targetID: CardID | ColumnID
   disabled?: boolean
-  onDrop?(): void
   children?: React.ReactNode
   className?: string
   style?: React.CSSProperties
 }) {
+  const dispatch = useDispatch()
+  const draggingCardID = useSelector(state => state.draggingCardID)
+  const cardsOrder = useSelector(state => state.cardsOrder)
+
   const [isTarget, setIsTarget] = useState(false)
   const visible = !disabled && isTarget
 
@@ -139,9 +151,19 @@ function DropArea({
       }}
       onDrop={() => {
         if (disabled) return
+        if (!draggingCardID || draggingCardID === toID) return
+
+        dispatch({
+          type: 'Card.Drop',
+          payload: {
+            toID,
+          },
+        })
+
+        const patch = reorderPatch(cardsOrder, draggingCardID, toID)
+        api('PATCH /v1/cardsOrder', patch)
 
         setIsTarget(false)
-        onDrop?.()
       }}
     >
       <DropAreaIndicator
