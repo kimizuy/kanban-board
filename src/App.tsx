@@ -5,11 +5,14 @@ import { Header as _Header } from './Header'
 import { Column } from './Column'
 import { DeleteDialog } from './DeleteDialog'
 import { Overlay as _Overlay } from './Overlay'
-import { useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
 export function App() {
   const dispatch = useDispatch()
-  const columns = useSelector(state => state.columns)
+  const columns = useSelector(
+    state => state.columns?.map(v => v.id),
+    shallowEqual,
+  )
 
   useEffect(() => {
     ;(async () => {
@@ -46,7 +49,7 @@ export function App() {
           {!columns ? (
             <Loading />
           ) : (
-            columns.map(({ id }) => <Column key={id} id={id} />)
+            columns.map(id => <Column key={id} id={id} />)
           )}
         </HorizontalScroll>
       </MainArea>
