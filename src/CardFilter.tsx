@@ -1,19 +1,24 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import * as color from './color'
 import { SearchIcon as _SearchIcon } from './icon'
 
 export function CardFilter() {
   const dispatch = useDispatch()
-  const value = useSelector(state => state.filterValue)
-  const onChange = (value: string) =>
-    dispatch({
-      type: 'Filter.SetFilter',
-      payload: {
-        value,
-      },
-    })
+  const [value, setValue] = useState('')
+  useEffect(() => {
+    const timer = setTimeout(
+      () =>
+        dispatch({
+          type: 'Filter.SetFilter',
+          payload: { value },
+        }),
+      400,
+    )
+
+    return () => clearTimeout(timer)
+  }, [dispatch, value])
 
   return (
     <Container>
@@ -21,7 +26,7 @@ export function CardFilter() {
       <Input
         placeholder="Filter cards"
         value={value}
-        onChange={ev => onChange(ev.currentTarget.value)}
+        onChange={ev => setValue(ev.currentTarget.value)}
       />
     </Container>
   )
