@@ -14,11 +14,9 @@ const store = createStore(
 )
 
 ReactDOM.render(
-  <>
-    <Provider store={store}>
-      <GlobalStyle />
-      <App />
-    </Provider>
-  </>,
+  <Provider store={store}>
+    <GlobalStyle />
+    <App />
+  </Provider>,
   document.getElementById('app'),
 )

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector, useStore } from 'react-redux'
+import { useDispatch, useStore } from 'react-redux'
 import styled from 'styled-components'
 import * as color from './color'
 import { SearchIcon as _SearchIcon } from './icon'
