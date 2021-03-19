@@ -5,6 +5,7 @@
   "author": "kimizuy <kimizuyamasaki@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "npm run start & npm run start-api",
     "start": "parcel ./src/index.html",
     "start-api": "json-server --watch ./api/db.json --middlewares ./api/middlewares",
     "build": "parcel build ./src/index.html",
